@@ -167,7 +167,7 @@ def gen_widget_text(player):
     global last_rot, last_rot_time, is_text_rotating
 
     metadata = player.props.metadata
-    # artist = player.get_artist()
+    artist = player.get_artist()
     # artist = metadata["xesam:artist"][0]
     title = player.get_title() or ""
     # title = metadata["xesam:title"]
@@ -181,7 +181,7 @@ def gen_widget_text(player):
     ):
         song_info = "AD PLAYING"
     else:
-        song_info = title.strip()
+        song_info = title.strip() + " - " + artist.strip()
 
     if not is_text_rotating:
         text = left_text(icon + song_info)
