@@ -204,8 +204,11 @@ def gen_widget_text(player):
 
 def signal_album_art_change():
     cmd = ["pkill", "-RTMIN+" + str(config["image_signal"]), "waybar"]
+    cmd2 = ["pkill", "-USR" + "2", "hyprlock"]
     res = subprocess.run(cmd)
+    res2 = subprocess.run(cmd2)
     logger.debug(f"pkill returned: {res}")
+    logger.debug(f"pkill returned: {res2}")
 
 
 def download_art(art_url):
