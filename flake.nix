@@ -15,6 +15,10 @@
         app = pkgs.python3Packages.buildPythonApplication {
           pname = "waybar-mediaplayer";
           version = "1.0";
+          pyproject = true;
+          build-system = [
+            pkgs.python3Packages.setuptools
+          ];
           src = ./.;
           nativeBuildInputs = [
             pkgs.gobject-introspection
