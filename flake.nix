@@ -4,13 +4,15 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-  }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
+      system:
+      let
         pkgs = nixpkgs.legacyPackages.${system};
         app = pkgs.python3Packages.buildPythonApplication {
           pname = "waybar-mediaplayer";
@@ -22,7 +24,7 @@
           src = ./.;
           nativeBuildInputs = [
             pkgs.gobject-introspection
-            pkgs.wrapGAppsHook
+            pkgs.wrapGAppsHook3
           ];
           propagatedBuildInputs = with pkgs.python3Packages; [
             pkgs.playerctl
@@ -37,13 +39,16 @@
               "fp = Path(GLib.get_user_config_dir()) / \"waybar-mediaplayer.json\""
           '';
           preFixup = ''
-            makeWrapperArgs+=(--prefix PATH : ${pkgs.lib.makeBinPath [
-              pkgs.playerctl
-            ]})
+            makeWrapperArgs+=(--prefix PATH : ${
+              pkgs.lib.makeBinPath [
+                pkgs.playerctl
+              ]
+            })
           '';
           meta.mainProgram = "mediaplayer";
         };
-      in {
+      in
+      {
         packages = {
           waybar-mediaplayer = app;
           default = self.packages.${system}.waybar-mediaplayer;
